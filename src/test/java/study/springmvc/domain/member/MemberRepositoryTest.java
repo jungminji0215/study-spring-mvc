@@ -4,6 +4,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /*
@@ -32,14 +34,22 @@ class MemberRepositoryTest {
     }
 
     @Test
-    void findById() {
-    }
-
-    @Test
     void findAll() {
-    }
+        // given
+        Member member1 = new Member("춘식이", 5);
+        Member member2 = new Member("라이언", 6);
 
-    @Test
-    void clearStore() {
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        // when
+        List<Member> members = memberRepository.findAll();
+
+        // then
+        Assertions.assertThat(member1).isEqualTo(members.get(0));
+
+        // 갯수랑 포함되어있는지만 확인해보면 된다.
+        Assertions.assertThat(members.size()).isEqualTo(2);
+        Assertions.assertThat(members).contains(member1, member2);
     }
 }
